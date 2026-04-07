@@ -228,6 +228,11 @@ button {
   height: 1.25rem;
 }
 
+.icon--fill {
+  fill: currentColor;
+  stroke: none;
+}
+
 .text-primary {
   color: var(--color-primary);
 }
