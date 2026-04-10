@@ -233,6 +233,11 @@ button {
   stroke: none;
 }
 
+.icon--tg {
+  width: 2rem;
+  height: 2rem;
+}
+
 .text-primary {
   color: var(--color-primary);
 }
