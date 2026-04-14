@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ICO Participation — SPT-Labs</title>
+    <link rel="icon" href="./images/logo.svg" type="image/svg+xml" />
+    <meta
+      name="description"
+      content="Join the SPT ICO: get the USDT deposit address, follow the steps, and submit transfer details for faster verification."
+    />
+    <meta name="robots" content="index, follow" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/styles.css?v=1.0.0" />
+    <style>
+      /* Page-only utilities (to mirror the React layout without Tailwind). */
+      .ico-wrap {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 96px 20px 80px;
+      }
+      .ico-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid rgba(0, 255, 163, 0.18);
+        margin-bottom: 22px;
+      }
+      .ico-title {
+        margin: 0;
+        font-size: clamp(28px, 3vw, 40px);
+        letter-spacing: -0.02em;
+      }
+      .ico-subtitle {
+        margin: 10px 0 0;
+        color: rgba(226, 232, 240, 0.72);
+        line-height: 1.6;
+        max-width: 760px;
+        font-size: 14px;
+      }
+      .ico-badge {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        border: 1px solid rgba(0, 255, 163, 0.25);
+        background: rgba(0, 255, 163, 0.08);
+        padding: 6px 12px;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgba(0, 255, 163, 0.92);
+        white-space: nowrap;
+      }
+      .ico-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 18px;
+      }
+      @media (max-width: 980px) {
+        .ico-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .ico-card {
+        border-radius: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(10, 14, 22, 0.65);
+        padding: 18px;
+        backdrop-filter: blur(10px);
+      }
+      .ico-card h2 {
+        margin: 0 0 10px;
+        font-size: 16px;
+      }
+      .ico-muted {
+        color: rgba(148, 163, 184, 0.75);
+        font-size: 12px;
+        line-height: 1.55;
+        margin: 0 0 14px;
+      }
+      .ico-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+      }
+      .ico-address {
+        font-family:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+        font-size: 14px;
+        color: white;
+        padding: 10px 12px;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.04);
+        max-width: 100%;
+        word-break: break-all;
+        font-weight: 800;
+      }
+      .ico-field {
+        display: grid;
+        gap: 8px;
+      }
+      .ico-label {
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        font-weight: 800;
+        color: rgba(148, 163, 184, 0.75);
+      }
+      .ico-input {
+        width: 100%;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.04);
+        padding: 12px 14px;
+        color: #fff;
+        outline: none;
+      }
+      .ico-input:focus {
+        border-color: rgba(0, 255, 163, 0.35);
+      }
+      .ico-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 6px;
+      }
+      .ico-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        height: 44px;
+        border-radius: 999px;
+        padding: 0 18px;
+        font-weight: 800;
+        font-size: 14px;
+        text-decoration: none;
+        user-select: none;
+        cursor: pointer;
+      }
+      .ico-btn--primary {
+        background: rgba(0, 255, 163, 0.92);
+        color: #061316;
+        border: 0;
+      }
+      .ico-btn--ghost {
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(255, 255, 255, 0.04);
+        color: #fff;
+      }
+      .ico-steps {
+        display: grid;
+        gap: 10px;
+        margin-top: 12px;
+      }
+      .ico-step {
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.03);
+        padding: 14px;
+        display: flex;
+        flex-direction: row;
+        gap: 6px;
+      }
+      .ico-step-title {
+        font-weight: 800;
+        margin: 0;
+      }
+      .ico-step-desc {
+        margin: 6px 0 0;
+        color: rgba(148, 163, 184, 0.78);
+        font-size: 12px;
+        line-height: 1.55;
+      }
+      .ico-list {
+        margin: 12px 0 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 10px;
+      }
+      .ico-list li {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        color: rgba(226, 232, 240, 0.85);
+        line-height: 1.55;
+        font-size: 14px;
+      }
+      .ico-dot {
+        width: 10px;
+        height: 10px;
+        margin-top: 6px;
+        border-radius: 999px;
+        background: rgba(0, 255, 163, 0.75);
+        box-shadow: 0 0 0 3px rgba(0, 255, 163, 0.12);
+        flex: 0 0 auto;
+      }
+      .ico-toast {
+        position: fixed;
+        left: 50%;
+        top: 16px;
+        transform: translateX(-50%);
+        z-index: 130;
+        max-width: min(560px, 92vw);
+        border-radius: 16px;
+        border: 1px solid rgba(0, 255, 163, 0.28);
+        background: rgba(6, 10, 16, 0.88);
+        color: #fff;
+        padding: 10px 14px;
+        display: none;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(10px);
+        font-size: 13px;
+      }
+    </style>
+    <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-6JBEQTVS5M"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-6JBEQTVS5M");
+  </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="site-nav" role="banner">
+      <div class="site-nav__inner">
+        <a class="brand" href="./index.html" aria-label="Back to home">
+          <img src="./images/logo.svg" alt="SPT-Labs" width="32" height="32" />
+          <span class="brand__text">SPT-Labs</span>
+        </a>
+        <button type="button" class="btn-nav" data-coming-soon>
+          Launch App
+        </button>
+      </div>
+    </header>
+
+    <div class="ico-toast" id="toast" role="status" aria-live="polite"></div>
+
+    <main id="main-content">
+      <div class="ico-wrap">
+        <div class="ico-top">
+          <div>
+            <h1 class="ico-title">Join SPT ICO</h1>
+            <p class="ico-subtitle">
+              Transfer USDT to the deposit address and submit your transaction
+              information. After manual verification, we will issue the
+              corresponding amount of SPT.
+            </p>
+          </div>
+          <span class="ico-badge">LIVE</span>
+        </div>
+
+        <div class="ico-grid">
+          <div style="display: grid; gap: 18px">
+            <section class="ico-card" aria-labelledby="deposit-address-title">
+              <h2 id="deposit-address-title">USDT Deposit Address</h2>
+              <p class="ico-muted">
+                Please only transfer <strong class="text-primary">USDT</strong> to this address.
+              </p>
+              <p class="ico-muted" style="margin-top: -4px">
+                Network: <strong class="text-primary">BNB Smart Chain (BSC)</strong>
+              </p>
+              <p class="ico-muted" style="margin-top: -4px">
+                Chain: <strong class="text-primary">56</strong>
+              </p>
+
+              <div class="ico-row">
+                <span class="ico-address" id="depositAddress"></span>
+                <button
+                  type="button"
+                  class="ico-btn ico-btn--ghost"
+                  id="copyAddressBtn"
+                >
+                  <span class="material-symbols-outlined text-[12px]"
+                    >content_copy</span
+                  >Copy
+                </button>
+              </div>
+
+              <p class="ico-muted" style="margin-top: 12px">
+                Tip: If you’re not sure about the network/chain, send a small
+                test transfer first.
+              </p>
+            </section>
+
+            <section class="ico-card" aria-labelledby="steps-title">
+              <div
+                style="
+                  display: flex;
+                  align-items: baseline;
+                  justify-content: space-between;
+                  gap: 12px;
+                  flex-wrap: wrap;
+                "
+              >
+                <h2 id="steps-title" style="margin: 0">
+                  Participation Process
+                </h2>
+                <span class="ico-muted" style="margin: 0"
+                  >Transfer USDT → Manual Verification → Issue SPT</span
+                >
+              </div>
+
+              <div class="ico-steps">
+                <div class="ico-step">
+                  <span
+                    class="material-symbols-outlined text-primary text-[22px] shrink-0"
+                    >wallet</span
+                  >
+                  <div>
+                    <p class="ico-step-title">1. Open Wallet</p>
+                    <p class="ico-step-desc">
+                      Prepare to transfer USDT using your wallet (e.g.,
+                      MetaMask).
+                    </p>
+                  </div>
+                </div>
+                <div class="ico-step">
+                  <span
+                    class="material-symbols-outlined text-primary text-[22px] shrink-0"
+                    >payments</span
+                  >
+                  <div>
+                  <p class="ico-step-title">2. Transfer USDT</p>
+                  <p class="ico-step-desc">
+                    Transfer USDT to the deposit address above.
+                  </p></div>
+                </div>
+                <div class="ico-step">
+                  <span
+                    class="material-symbols-outlined text-primary text-[22px] shrink-0"
+                    >task_alt</span
+                  >
+                  <div>
+                  <p class="ico-step-title">
+                    3. Submit Transaction Information
+                  </p>
+                  <p class="ico-step-desc">
+                      Fill in the transfer amount and transaction hash to help us
+                      verify faster.
+                    </p>
+                  </div>
+                </div>
+                <div class="ico-step">
+                  <span
+                    class="material-symbols-outlined text-primary text-[22px] shrink-0"
+                    >token</span
+                  >
+                  <div>
+                  <p class="ico-step-title">4. Issue SPT</p>
+                  <p class="ico-step-desc">
+                    After verification, we will issue the corresponding amount
+                    of SPT to your wallet.
+                  </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="ico-card" aria-labelledby="submit-title">
+              <h2 id="submit-title">Submit Transaction Information</h2>
+
+              <div style="margin-top: 14px; display: grid; gap: 12px">
+                <div class="ico-field">
+                  <div class="ico-label">Transfer Amount (USDT)</div>
+                  <input
+                    class="ico-input"
+                    id="amountInput"
+                    placeholder="For example: 100"
+                  />
+                </div>
+
+                <div class="ico-field">
+                  <div class="ico-label">Transaction Hash (Tx Hash)</div>
+                  <input
+                    class="ico-input"
+                    id="txHashInput"
+                    placeholder="0x..."
+                  />
+                </div>
+
+                <div class="ico-actions">
+                  <button
+                    type="button"
+                    class="ico-btn ico-btn--primary"
+                    id="submitBtn"
+                  >
+                    Submit
+                  </button>
+                  <a class="ico-btn ico-btn--ghost" href="./index.html"
+                    >Back to home</a
+                  >
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <aside style="display: grid; gap: 18px">
+            <section class="ico-card" aria-labelledby="notice-title">
+              <h2 id="notice-title">Important Notice</h2>
+              <ul class="ico-list">
+                <li>
+                  <span class="ico-dot" aria-hidden="true"></span
+                  ><span
+                    >Please ensure the transferred asset is USDT (do not
+                    transfer other assets).</span
+                  >
+                </li>
+                <li>
+                  <span class="ico-dot" aria-hidden="true"></span
+                  ><span
+                    >Please transfer on <strong>BNB Smart Chain (BSC)</strong>
+                    only. Transfers on other networks may cause asset loss.</span
+                  >
+                </li>
+                <li>
+                  <span class="ico-dot" aria-hidden="true"></span
+                  ><span
+                    >It is recommended to test a small transfer first, then
+                    increase the amount after confirmation.</span
+                  >
+                </li>
+                <li>
+                  <span class="ico-dot" aria-hidden="true"></span
+                  ><span
+                    >SPT issuance is performed after manual verification;
+                    arrival time depends on processing.</span
+                  >
+                </li>
+              </ul>
+            </section>
+
+            <section
+              class="ico-card"
+              aria-labelledby="about-spt-title"
+              style="
+                background: linear-gradient(
+                  135deg,
+                  rgba(10, 14, 22, 0.75),
+                  rgba(10, 14, 22, 0.55)
+                );
+              "
+            >
+              <h2 id="about-spt-title" style="display: flex; align-items: center; gap: 8px;">
+                <span class="material-symbols-outlined text-primary text-2xl">auto_graph</span>About SPT</h2>
+              <p class="ico-muted">
+                SPT is the ecosystem token of the platform, used for staking,
+                incentives, and future governance participation.
+              </p>
+
+              <div
+                style="
+                  margin-top: 14px;
+                  border-radius: 14px;
+                  border: 1px solid rgba(255, 255, 255, 0.08);
+                  background: rgba(255, 255, 255, 0.03);
+                  padding: 14px;
+                "
+              >
+                <div class="ico-label" style="margin-bottom: 8px">
+                  Need help?
+                </div>
+                <div
+                  style="
+                    color: rgba(226, 232, 240, 0.88);
+                    line-height: 1.55;
+                    font-size: 14px;
+                  "
+                >
+                  If you encounter any issues with the transfer, please contact
+                  official support and provide the Tx Hash.
+                </div>
+              </div>
+            </section>
+          </aside>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+      <div class="site-footer__inner">
+        <div class="site-footer__row">
+          <div>
+            <div class="site-footer__brand">
+              <svg
+                class="icon text-primary"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  d="M22 12h-4l-3 9L9 3l-3 9H2"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <span class="brand__text">SPT-Labs</span>
+            </div>
+            <p class="site-footer__copy">
+              © 2026 SPT-Labs. Built for the Stadium.
+            </p>
+          </div>
+          <div class="site-footer__social">
+            <a
+              href="https://github.com/d-bet"
+              class="social-btn"
+              aria-label="GitHub"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <svg class="icon icon--sm icon--fill" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+                <path
+                  d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12c0-6.627-5.373-12-12-12z"
+                />
+              </svg>
+            </a>
+            <a
+              href="https://t.me/spt_labs"
+              class="social-btn"
+              aria-label="Telegram"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <svg class="icon icon--sm icon--fill icon--tg" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+                <path
+                  d="M9.993 15.574 9.8 18.28c.278 0 .398-.119.543-.262l1.304-1.247 2.703 1.978c.495.273.846.13.97-.459l1.759-8.254c.163-.762-.275-1.06-.759-.88L5.99 12.356c-.704.273-.694.665-.12.843l2.734.854 6.349-4.006c.299-.198.571-.088.347.11z"
+                />
+              </svg>
+            </a>
+            <a href="https://x.com/spt_labs" class="social-btn" aria-label="X (Twitter)" rel="noopener noreferrer" target="_blank">
+              <svg class="icon icon--sm icon--fill" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                />
+              </svg>
+            </a>
+            <a href="https://bscscan.com/address/0x9E97741D718Aa6F86c9132C3242F73a40581a056#code" class="social-btn" aria-label="Security">
+              <svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+        
+      </div>
+    </footer>
+
+    <div
+      class="cs-modal"
+      id="comingSoonModal"
+      hidden
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="cs-modal-title"
+    >
+      <div class="cs-modal__overlay" data-modal-close></div>
+      <div class="cs-modal__panel" role="document">
+        <h2 id="cs-modal-title" class="cs-modal__title">Coming soon</h2>
+        <p class="cs-modal__desc">
+          This feature is not available yet. Please check back later.
+        </p>
+        <button type="button" class="cs-modal__btn" data-modal-close>OK</button>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        const ICO_DEPOSIT_ADDRESS =
+          "0x80422f1bdd47936921ad6388338a76f15ade133b";
+        const ICO_SUBMIT_EMAIL = "spt_protocol@outlook.com";
+
+        const toastEl = document.getElementById("toast");
+        const depositAddressEl = document.getElementById("depositAddress");
+        const copyBtn = document.getElementById("copyAddressBtn");
+        const amountInput = document.getElementById("amountInput");
+        const txHashInput = document.getElementById("txHashInput");
+        const submitBtn = document.getElementById("submitBtn");
+
+        function showToast(text) {
+          if (!toastEl) return;
+          toastEl.textContent = text;
+          toastEl.style.display = "block";
+          window.clearTimeout(showToast._t);
+          showToast._t = window.setTimeout(() => {
+            toastEl.style.display = "none";
+          }, 2500);
+        }
+
+        async function copyAddress() {
+          try {
+            await navigator.clipboard.writeText(ICO_DEPOSIT_ADDRESS);
+            showToast("Copied address");
+          } catch {
+            showToast("Copy failed, please copy manually");
+          }
+        }
+
+        function submit() {
+          const amountText =
+            amountInput && amountInput.value
+              ? String(amountInput.value).trim()
+              : "";
+          const txHash =
+            txHashInput && txHashInput.value
+              ? String(txHashInput.value).trim()
+              : "";
+
+          const subject = encodeURIComponent(
+            `SPT ICO Submission${amountText ? ` - ${amountText} USDT` : ""}`,
+          );
+          const body = encodeURIComponent(
+            [
+              "Hello SPT Protocol team,",
+              "",
+              "I would like to submit my ICO transfer information.",
+              "",
+              `Transfer Amount: ${amountText || "-"}`,
+              `Transaction Hash: ${txHash || "-"}`,
+              "Network: BNB Smart Chain (BSC)",
+              `Deposit Address: ${ICO_DEPOSIT_ADDRESS}`,
+            ].join("\n"),
+          );
+
+          window.location.href = `mailto:${ICO_SUBMIT_EMAIL}?subject=${subject}&body=${body}`;
+        }
+
+        if (depositAddressEl)
+          depositAddressEl.textContent = ICO_DEPOSIT_ADDRESS;
+        if (copyBtn) copyBtn.addEventListener("click", copyAddress);
+        if (submitBtn) submitBtn.addEventListener("click", submit);
+
+        const modal = document.getElementById("comingSoonModal");
+        const triggers = document.querySelectorAll("[data-coming-soon]");
+        if (!modal || !triggers.length) return;
+
+        const closeEls = modal.querySelectorAll("[data-modal-close]");
+        let lastActive = null;
+
+        function openModal() {
+          lastActive = document.activeElement;
+          modal.removeAttribute("hidden");
+          modal.setAttribute("aria-hidden", "false");
+          document.body.style.overflow = "hidden";
+          const focusTarget = modal.querySelector(".cs-modal__btn");
+          if (focusTarget) focusTarget.focus();
+        }
+
+        function closeModal() {
+          modal.setAttribute("hidden", "");
+          modal.setAttribute("aria-hidden", "true");
+          document.body.style.overflow = "";
+          if (lastActive && typeof lastActive.focus === "function") {
+            lastActive.focus();
+          }
+        }
+
+        triggers.forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            openModal();
+          });
+        });
+
+        closeEls.forEach((el) => {
+          el.addEventListener("click", () => closeModal());
+        });
+
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && !modal.hasAttribute("hidden")) {
+            closeModal();
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
