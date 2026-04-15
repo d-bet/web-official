@@ -754,6 +754,160 @@ button {
   transform: scale(0.98);
 }
 
+/* SPT contract row (shareholder column) */
+.spt-token-card {
+  margin-top: 1.25rem;
+  max-width: 28rem;
+  padding: 1rem 1.125rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(164, 255, 185, 0.18);
+  background: linear-gradient(
+    145deg,
+    rgba(164, 255, 185, 0.06),
+    rgba(10, 14, 22, 0.55)
+  );
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+
+.spt-token-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.625rem;
+}
+
+.spt-token-card__label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.spt-token-card__network {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-gray-400);
+}
+
+.spt-token-card__addr-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.spt-token-card__addr {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: rgba(226, 232, 240, 0.95);
+  word-break: break-all;
+}
+
+.spt-token-card__icon-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.625rem;
+  border: 1px solid rgba(164, 255, 185, 0.25);
+  background: rgba(164, 255, 185, 0.08);
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+}
+
+.spt-token-card__icon-btn:hover {
+  background: rgba(164, 255, 185, 0.14);
+  border-color: rgba(164, 255, 185, 0.4);
+}
+
+.spt-token-card__icon-btn:active {
+  transform: scale(0.96);
+}
+
+.spt-token-card__icon-btn svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  display: block;
+}
+
+.spt-token-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.625rem;
+  margin-top: 0.875rem;
+}
+
+.spt-token-card__add {
+  flex: 1 1 auto;
+  min-width: 10rem;
+  padding: 0.625rem 1rem;
+  border-radius: 9999px;
+  border: 0;
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: var(--color-on-primary-container);
+  background: var(--color-primary-container);
+  transition: filter 0.2s, transform 0.15s;
+}
+
+.spt-token-card__add:hover {
+  filter: brightness(1.08);
+}
+
+.spt-token-card__add:active {
+  transform: scale(0.98);
+}
+
+.spt-token-card__link {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(226, 232, 240, 0.75);
+  text-decoration: none;
+  padding: 0.5rem 0.25rem;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.spt-token-card__link:hover {
+  color: var(--color-primary);
+  border-bottom-color: rgba(164, 255, 185, 0.45);
+}
+
+.spt-token-card__hint {
+  display: block;
+  margin-top: 0.625rem;
+  min-height: 1.25rem;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.spt-token-card__hint[data-state="ok"] {
+  color: var(--color-primary);
+}
+
+.spt-token-card__hint[data-state="err"] {
+  color: #fca5a5;
+}
+
 .shareholder__visual {
   position: relative;
 }

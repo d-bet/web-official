@@ -339,6 +339,45 @@
               </div>
               <a class="btn-holders" href="./ico.html">Participate in a token ICO</a>
             </div>
+            <div
+              class="spt-token-card"
+              id="sptTokenCard"
+              data-spt-address="0x9E97741D718Aa6F86c9132C3242F73a40581a056"
+            >
+              <div class="spt-token-card__head">
+                <span class="spt-token-card__label">SPT contract</span>
+                <span class="spt-token-card__network">BNB Smart Chain · 56</span>
+              </div>
+              <div class="spt-token-card__addr-row">
+                <p class="spt-token-card__addr" id="sptTokenAddressDisplay">
+                  0x9E97741D718Aa6F86c9132C3242F73a40581a056
+                </p>
+                <button
+                  type="button"
+                  class="spt-token-card__icon-btn"
+                  id="copySptAddressBtn"
+                  aria-label="Copy contract address"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                  </svg>
+                </button>
+              </div>
+              <div class="spt-token-card__actions">
+                <button type="button" class="spt-token-card__add" id="addSptToWalletBtn">
+                  Add SPT to wallet
+                </button>
+                <a
+                  class="spt-token-card__link"
+                  href="https://bscscan.com/token/0x9E97741D718Aa6F86c9132C3242F73a40581a056"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >View on BscScan</a
+                >
+              </div>
+              <span class="spt-token-card__hint" id="sptTokenHint" aria-live="polite"></span>
+            </div>
           </div>
           <div class="shareholder__visual">
             <div class="shareholder__visual-glow" aria-hidden="true"></div>
@@ -774,6 +813,129 @@
             window.scrollTo({ top: 0, behavior: "smooth" });
           });
         }
+
+        const SPT_TOKEN = {
+          address: "0x9E97741D718Aa6F86c9132C3242F73a40581a056",
+          symbol: "SPT",
+          decimals: 18,
+          chainIdHex: "0x38",
+        };
+
+        const sptCard = document.getElementById("sptTokenCard");
+        const copySptBtn = document.getElementById("copySptAddressBtn");
+        const addSptBtn = document.getElementById("addSptToWalletBtn");
+        const sptHint = document.getElementById("sptTokenHint");
+
+        function setSptHint(text, state) {
+          if (!sptHint) return;
+          sptHint.textContent = text || "";
+          if (state) sptHint.setAttribute("data-state", state);
+          else sptHint.removeAttribute("data-state");
+        }
+
+        let sptHintTimer = 0;
+        function flashSptHint(text, state, ms) {
+          setSptHint(text, state);
+          window.clearTimeout(sptHintTimer);
+          sptHintTimer = window.setTimeout(() => {
+            setSptHint("");
+          }, ms || 2800);
+        }
+
+        async function ensureBsc(ethereum) {
+          try {
+            await ethereum.request({
+              method: "wallet_switchEthereumChain",
+              params: [{ chainId: SPT_TOKEN.chainIdHex }],
+            });
+          } catch (err) {
+            if (err && err.code === 4902) {
+              await ethereum.request({
+                method: "wallet_addEthereumChain",
+                params: [
+                  {
+                    chainId: SPT_TOKEN.chainIdHex,
+                    chainName: "BNB Smart Chain",
+                    nativeCurrency: {
+                      name: "BNB",
+                      symbol: "BNB",
+                      decimals: 18,
+                    },
+                    rpcUrls: ["https://bsc-dataseed.binance.org/"],
+                    blockExplorerUrls: ["https://bscscan.com"],
+                  },
+                ],
+              });
+              return;
+            }
+            throw err;
+          }
+        }
+
+        async function addSptToWallet() {
+          const ethereum = window.ethereum;
+          if (!ethereum) {
+            flashSptHint(
+              "No Web3 wallet found. Install MetaMask or use a compatible browser wallet.",
+              "err",
+            );
+            return;
+          }
+
+          setSptHint("Confirm in your wallet…");
+          try {
+            await ensureBsc(ethereum);
+            const iconUrl = new URL(
+              "./images/logo.svg",
+              window.location.href,
+            ).href;
+            const wasAdded = await ethereum.request({
+              method: "wallet_watchAsset",
+              params: {
+                type: "ERC20",
+                options: {
+                  address: SPT_TOKEN.address,
+                  symbol: SPT_TOKEN.symbol,
+                  decimals: SPT_TOKEN.decimals,
+                  image: iconUrl,
+                },
+              },
+            });
+            flashSptHint(
+              wasAdded ? "SPT added to your wallet." : "Request closed.",
+              wasAdded ? "ok" : undefined,
+            );
+          } catch (e) {
+            const msg =
+              e && (e.message || e.reason || String(e.code || "")) || "";
+            if (
+              /user rejected|rejected|denied|cancel/i.test(msg) ||
+              e.code === 4001
+            ) {
+              flashSptHint("Cancelled.");
+            } else {
+              flashSptHint(
+                "Could not add token. Check that you are on BSC and try again.",
+                "err",
+              );
+            }
+          }
+        }
+
+        async function copySptAddress() {
+          const addr =
+            (sptCard && sptCard.getAttribute("data-spt-address")) ||
+            SPT_TOKEN.address;
+          try {
+            await navigator.clipboard.writeText(addr);
+            flashSptHint("Address copied.", "ok");
+          } catch {
+            flashSptHint("Copy failed — select the address manually.", "err");
+          }
+        }
+
+        if (copySptBtn) copySptBtn.addEventListener("click", copySptAddress);
+        if (addSptBtn) addSptBtn.addEventListener("click", addSptToWallet);
 
         const modal = document.getElementById("comingSoonModal");
         const triggers = document.querySelectorAll("[data-coming-soon]");
