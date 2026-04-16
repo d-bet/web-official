@@ -73,9 +73,9 @@
           <img src="./images/logo.svg" alt="SPT-Labs" width="32" height="32" />
           <span class="brand__text">SPT-Labs</span>
         </div>
-        <button type="button" class="btn-nav" data-coming-soon>
+        <a href="https://dap.spt-labs.xyz" class="btn-nav">
           Launch App
-        </button>
+        </a>
       </div>
     </header>
 
@@ -112,7 +112,7 @@
               The world’s first truly fair and transparent Web3 sports prediction platform built on BNB Smart Chain (BSC).
             </p>
             <div class="hero__actions">
-              <button type="button" class="btn-primary-lg" data-coming-soon>
+              <a href="https://dapp.spt-labs.xyz" class="btn-primary-lg">
                 Enter App
                 <svg
                   class="icon icon--sm"
@@ -128,7 +128,7 @@
                     stroke-linejoin="round"
                   />
                 </svg>
-              </button>
+              </a>
               <a href="./SPT-Protocol_Whitepaper.pdf" class="btn-outline-lg"
                 >Documentation</a
               >
@@ -937,47 +937,6 @@
         if (copySptBtn) copySptBtn.addEventListener("click", copySptAddress);
         if (addSptBtn) addSptBtn.addEventListener("click", addSptToWallet);
 
-        const modal = document.getElementById("comingSoonModal");
-        const triggers = document.querySelectorAll("[data-coming-soon]");
-        if (!modal || !triggers.length) return;
-
-        const closeEls = modal.querySelectorAll("[data-modal-close]");
-        let lastActive = null;
-
-        function openModal() {
-          lastActive = document.activeElement;
-          modal.removeAttribute("hidden");
-          modal.setAttribute("aria-hidden", "false");
-          document.body.style.overflow = "hidden";
-          const focusTarget = modal.querySelector(".cs-modal__btn");
-          if (focusTarget) focusTarget.focus();
-        }
-
-        function closeModal() {
-          modal.setAttribute("hidden", "");
-          modal.setAttribute("aria-hidden", "true");
-          document.body.style.overflow = "";
-          if (lastActive && typeof lastActive.focus === "function") {
-            lastActive.focus();
-          }
-        }
-
-        triggers.forEach((btn) => {
-          btn.addEventListener("click", (e) => {
-            e.preventDefault();
-            openModal();
-          });
-        });
-
-        closeEls.forEach((el) => {
-          el.addEventListener("click", () => closeModal());
-        });
-
-        document.addEventListener("keydown", (e) => {
-          if (e.key === "Escape" && !modal.hasAttribute("hidden")) {
-            closeModal();
-          }
-        });
       })();
     </script>
   </body>
